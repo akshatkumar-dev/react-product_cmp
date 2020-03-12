@@ -41,7 +41,7 @@ const ViewPhones = (props) =>{
         minPriceStateChange(minPrice.current.value);
         maxPriceStateChange(maxPrice.current.value);
     }
-    const viewDetailsHandler = ()=>{
+    const viewDetailsHandler = (name)=>{
         props.history.push("/register")
     }
     const addToCartHandler = ()=>{
@@ -74,8 +74,8 @@ const ViewPhones = (props) =>{
                     return(
                     <div key={index}>
                     <p>{element.name} {element.price}</p>
-                    <button onClick={()=>viewDetailsHandler()}>View Details</button>
-                    <button onClick={()=>addToCartHandler()}>Cart</button>
+                    <button onClick={()=>viewDetailsHandler(element.name)}>View Details</button>
+                    <button onClick={()=>addToCartHandler("flipkart",element.name)}>Cart</button>
                     </div>
                     );
                 })
@@ -86,8 +86,8 @@ const ViewPhones = (props) =>{
                     return(
                     <div key={index}>
                     <p>{element.name} {element.price}</p>
-                    <button onClick={()=>viewDetailsHandler()}>View Details</button>
-                    <button onClick={()=>addToCartHandler()}>Cart</button>
+                    <button onClick={()=>viewDetailsHandler(element.name)}>View Details</button>
+                    <button onClick={()=>addToCartHandler("amazon",element.name)}>Cart</button>
                     </div>
                     );
                 })

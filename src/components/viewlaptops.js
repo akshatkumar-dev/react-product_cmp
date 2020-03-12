@@ -41,10 +41,10 @@ const ViewLaptops = (props) =>{
         maxPriceStateChange(maxPrice.current.value);
         flipkartdataChange(true)
     }
-    const viewDetailsHandler = ()=>{
-        props.history.push("/register")
+    const viewDetailsHandler = (vendor,name)=>{
+        props.history.push(`/showdetails?type=laptop&vendor=${vendor}&name=${name}`)
     }
-    const addToCartHandler = ()=>{
+    const addToCartHandler = (vendor,name)=>{
         props.history.push("/login")
     }
     const getDetailsHandlerA = ()=>{
@@ -75,8 +75,8 @@ const ViewLaptops = (props) =>{
                     return(
                     <div key={index}>
                     <p>{element.name} {element.price}</p>
-                    <button onClick={()=>viewDetailsHandler()}>View Details</button>
-                    <button onClick={()=>addToCartHandler()}>Cart</button>
+                    <button onClick={()=>viewDetailsHandler("flipkart",element.name)}>View Details</button>
+                    <button onClick={()=>addToCartHandler("flipkart",element.name)}>Cart</button>
                     </div>
                     );
                 })
@@ -87,8 +87,8 @@ const ViewLaptops = (props) =>{
                     return(
                     <div key={index}>
                     <p>{element.name} {element.price}</p>
-                    <button onClick={()=>viewDetailsHandler()}>View Details</button>
-                    <button onClick={()=>addToCartHandler()}>Cart</button>
+                    <button onClick={()=>viewDetailsHandler("amazon",element.name)}>View Details</button>
+                    <button onClick={()=>addToCartHandler("amazon",element.name)}>Cart</button>
                     </div>
                     );
                 })
