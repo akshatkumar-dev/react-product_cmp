@@ -1,0 +1,12 @@
+.navbar-container .navbar{
+    display: flex;
+    justify-content: space-between;
+}
+.navbar-container .navbar-options{
+    display: flex;
+}
+
+.navbar-title,.navbar-option{
+    margin: 1em 0.5em;
+    padding: 1em;
+}
