@@ -42,7 +42,7 @@ const ViewPhones = (props) =>{
         maxPriceStateChange(maxPrice.current.value);
     }
     const viewDetailsHandler = (name)=>{
-        props.history.push("/register")
+        props.history.push(`/showdetails?type=phone&name=${name}`)
     }
     const addToCartHandler = ()=>{
         props.history.push("/login")
