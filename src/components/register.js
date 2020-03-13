@@ -1,12 +1,15 @@
-import React,{useEffect,useState,useRef} from 'react';
+import React,{useEffect,useState,useRef,useContext} from 'react';
 import Navbar from '../widgets/navbar';
 import axios from 'axios';
+import {UserContext} from '../user_context';
 const Register = () =>{
     let [emailState,emailStateChange] = useState({email:""})
     let [passwordState,passwordStateChange] = useState({password:""})
     let [otpState,otpStateChange] = useState({otp:0});
     let [otpStyleState,otpStyleChange] = useState({value: "none"})
     let [submitStyleState,submitStyleChange] = useState({value: "block"})
+    let x = useContext(UserContext);
+    let changeToken = x.tokenChange
     let emailref = useRef();
     let passref = useRef();
     let otpref = useRef();
@@ -23,6 +26,7 @@ const Register = () =>{
                 "email": emailState.email,
                 "password": passwordState.password
             }
+            emailState.email = "";
             let response  = await axios.post("http://localhost:4000/api/register",data);
             if(response.data === "otp sent"){
                 otpStyleChange({value: "block"})
@@ -30,7 +34,7 @@ const Register = () =>{
             }
         }
         if(emailState.email.length!==0){registerUser();}
-    },[emailState.email,passwordState.password])
+    })
     useEffect(()=>{
         
         const confirmOtp = async () =>{
@@ -39,11 +43,14 @@ const Register = () =>{
                 "password": passwordState.password,
                 "otp": otpState.otp
             }
+            otpState.otp = 0;
            let response = await axios.post("http://localhost:4000/api/confirmotp",data);
-           console.log(response.data)
+           if(response.data !== "wrong otp"){
+               changeToken(response.data)
+           }
         }
         if(otpState.otp !== 0){confirmOtp()}
-    },[otpState.otp,emailState.email,passwordState.password])
+    })
     const registerHandler = ()=>{
         emailStateChange({email:emailref.current.value})
         passwordStateChange({password:passref.current.value})
