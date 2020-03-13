@@ -1,7 +1,10 @@
-import React,{useState,useRef,useEffect} from 'react';
+import React,{useState,useRef,useEffect,useContext} from 'react';
 import axios from 'axios'
-
+import {UserContext} from '../user_context';
 const ViewLaptops = (props) =>{
+    let context = useContext(UserContext);
+    let token = context.token;
+    let tokenChange = context.tokenChange;
     let minPrice = useRef();
     let maxPrice = useRef();
     let [minPriceState,minPriceStateChange] = useState("");
@@ -10,6 +13,24 @@ const ViewLaptops = (props) =>{
     let [resultsAState,resultsAStateChange] = useState([]);
     let [flipkartdata,flipkartdataChange] = useState(false);
     let [amazondata,amazondataChange] = useState(false);
+    let [cartitem,cartitemChange] = useState(null);
+    useEffect(()=>{
+        let x = localStorage.getItem("auth")
+        if(x !== null){
+            tokenChange(x);
+        }
+    },[tokenChange])
+    useEffect(()=>{
+        const addToCart = async ()=>{
+            let data = {
+                name: cartitem.name,
+                vendor: cartitem.vendor
+            }
+            let response = await axios.put("http://localhost:4000/api/addlapcart",data,{headers:{Authorization: `Bearer ${token}`}});
+            console.log(response.data);
+        }
+        if(cartitem !== null){addToCart()}
+    },[cartitem,token])
     useEffect(()=>{
         const getDetails = async ()=>{
             amazondataChange(false)
@@ -45,7 +66,7 @@ const ViewLaptops = (props) =>{
         props.history.push(`/showdetails?type=laptop&vendor=${vendor}&name=${name}`)
     }
     const addToCartHandler = (vendor,name)=>{
-        props.history.push("/login")
+        cartitemChange({name: name,vendor: vendor})
     }
     const getDetailsHandlerA = ()=>{
         minPriceStateChange(minPrice.current.value);

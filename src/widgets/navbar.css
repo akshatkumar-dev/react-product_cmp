@@ -10,3 +10,6 @@
     margin: 1em 0.5em;
     padding: 1em;
 }
+.navbar-notlogged,.navbar-logged{
+    display: flex;
+}

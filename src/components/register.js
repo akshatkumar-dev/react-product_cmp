@@ -20,6 +20,11 @@ const Register = () =>{
         display: submitStyleState.value
     }
     useEffect(()=>{
+        if(localStorage.getItem("auth")!==null){
+            changeToken(localStorage.getItem("auth"))
+        }
+    },[changeToken])
+    useEffect(()=>{
         
         const registerUser = async () =>{
             let data = {
@@ -46,6 +51,7 @@ const Register = () =>{
             otpState.otp = 0;
            let response = await axios.post("http://localhost:4000/api/confirmotp",data);
            if(response.data !== "wrong otp"){
+               localStorage("auth",response.data)
                changeToken(response.data)
            }
         }

@@ -1,8 +1,17 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import qs from 'query-string';
 import axios from 'axios';
+import {UserContext} from '../user_context';
 const ShowDetails = (props) =>{
     let [details,detailsChange] = useState([]);
+    let context = useContext(UserContext);
+    let tokenChange = context.tokenChange;
+    useEffect(()=>{
+        let x = localStorage.getItem("auth")
+        if(x !== null){
+            tokenChange(x);
+        }
+    },[tokenChange])
     useEffect(()=>{
         const getData = async ()=>{
             let string = qs.parse(props.location.search);

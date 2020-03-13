@@ -6,13 +6,18 @@ import Home from './components/home'
 import ViewPhones from './components/viewphones';
 import ViewLaptops from './components/viewlaptops';
 import ShowDetails from './components/showdetails';
+import ViewCart from './components/viewcart';
 import {UserContext} from './user_context';
 const App = () => {
   let [userToken,userTokenChange] = useState(null);
+  const tokenchangeHandler = (token)=>{
+    userTokenChange(token);
+  }
   return (
+    <div className="app-container">
+      <UserContext.Provider value={{token: userToken,tokenChange: tokenchangeHandler}}>
     <BrowserRouter>
       <div className="App">
-        <UserContext.Provider value={{token: userToken,tokenChange: userTokenChange}}>
         <Switch>
           <Route path="/" exact component={Home}/>
           <Route path="/login" exact component={Login}/>
@@ -20,10 +25,13 @@ const App = () => {
           <Route path="/viewphones" exact component={ViewPhones}/>
           <Route path="/viewlaptops" exact component={ViewLaptops}/>
           <Route path="/showdetails" exact component={ShowDetails}/>
+          <Route path="/viewcart" exact component={ViewCart}/>
         </Switch>
-        </UserContext.Provider>
       </div>
     </BrowserRouter>
+        </UserContext.Provider>
+    </div>
+
   );
 }
 
