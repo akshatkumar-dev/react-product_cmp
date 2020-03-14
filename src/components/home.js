@@ -6,6 +6,7 @@ import Details from '../assets/details.png'
 import Laptop from '../assets/laptop.png'
 import Phone from '../assets/phone.png'
 import Mern from '../assets/mern.webp'
+
 const Home = ()=>{
     let context = useContext(UserContext);
     let tokenChange = context.tokenChange;
@@ -15,6 +16,7 @@ const Home = ()=>{
             tokenChange(x);
         }
     },[tokenChange])
+    
     return(
         <React.Fragment>
             <Navbar/>
@@ -49,7 +51,7 @@ const Home = ()=>{
                 <h1 className="text">View Full Details</h1>
                 <p className="text">Get full details of the product and make right choice</p>
                 </div>
-                <di><img src={Details} alt="Sample"/></di>
+                <div><img src={Details} alt="Sample"/></div>
                 </div>
                 <div className="home-title-item2">
                 <div>
@@ -65,6 +67,7 @@ const Home = ()=>{
             <div className="home-final">
 
             <div className="home-about">
+                <hr className="separator"/>
                 <h1>What?</h1>
                 <p>This page gets the real time data from flipkart and amazon at the same time<br/> based on
                     your filters to provide a <br/>simultaneous comparison between products from different 
@@ -88,7 +91,6 @@ const Home = ()=>{
                 <img src={Mern} alt="Mern"></img>
             </div>
             </div>
-            
         </div>
         </React.Fragment>
     );

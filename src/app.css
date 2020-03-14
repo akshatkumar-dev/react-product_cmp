@@ -265,7 +265,10 @@
 /* Spinner design */
 .lds-roller {
     display: inline-block;
-    position: relative;
+    position: absolute;
+    top: 45vh;
+    z-index: 200;
+    left: 47%;
     width: 80px;
     height: 80px;
   }
@@ -280,7 +283,7 @@
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: #fff;
+    background: lightseagreen;
     margin: -4px 0 0 -4px;
   }
   .lds-roller div:nth-child(1) {
@@ -346,5 +349,15 @@
     100% {
       transform: rotate(360deg);
     }
+  }
+
+  /* Backdrop design */
+  .backdrop{
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.75);
   }
   

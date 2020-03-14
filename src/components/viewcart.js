@@ -2,7 +2,10 @@ import React,{useState,useEffect,useContext} from 'react';
 import {UserContext} from '../user_context';
 import axios from 'axios'
 import Navbar from '../widgets/navbar';
+import Spinner from '../widgets/spinner'
 const ViewCart = (props) =>{
+    let [isLoading,isLoadingChange] = useState(true);
+
     let [lapcartdata,lapcartdataChange] = useState([]);
     let [phonecartdata,phonecartdataChange] = useState([]);
     let [lapcart,lapcartChange] = useState(true);
@@ -24,6 +27,7 @@ const ViewCart = (props) =>{
         const fetchData = async ()=>{
             lapcartChange(false);
             let response = await axios.get("http://localhost:4000/api/getlapcart",{headers:{Authorization: `Bearer ${token}`}})
+            isLoadingChange(false)
             let x = []
             if(response.data !== "No"){
 
@@ -33,7 +37,7 @@ const ViewCart = (props) =>{
             })
             lapcartdataChange([...x]);
         }else{
-            console.log("not authorized")
+            alert("Not Authorized");
         }
         }
         if(lapcart && checkedLocal){fetchData()}
@@ -42,6 +46,7 @@ const ViewCart = (props) =>{
         const fetchData = async ()=>{
             phonecartChange(false);
             let response = await axios.get("http://localhost:4000/api/getmobcart",{headers:{Authorization: `Bearer ${token}`}})
+            isLoadingChange(false)
             let x = []
             if(response.data !== "No"){
                 Object.values(response.data).forEach(element=>{
@@ -49,7 +54,7 @@ const ViewCart = (props) =>{
                 })
                 phonecartdataChange([...x]);
             }
-            else{console.log("not authorized")}
+            else{alert("Not Authorized")}
         }
         if(phonecart && checkedLocal){fetchData()}
     })
@@ -57,6 +62,7 @@ const ViewCart = (props) =>{
         const deleteData = async ()=>{
             
             let response = await axios.delete(`http://localhost:4000/api/deletelapcart?name=${toDelete.name}&vendor=${toDelete.vendor}`,{headers:{Authorization: `Bearer ${token}`}})
+            isLoadingChange(false)
             console.log(response.data)
             if(response.data === "Value removed"){
                 lapcartdataChange(prev=>{
@@ -72,6 +78,7 @@ const ViewCart = (props) =>{
         const deleteData = async ()=>{
             
             let response = await axios.delete(`http://localhost:4000/api/deletemobcart?name=${toDeleteMob.name}&vendor=${toDeleteMob.vendor}`,{headers:{Authorization: `Bearer ${token}`}})
+            isLoadingChange(false);
             console.log(response.data)
             if(response.data === "Value removed"){
                 
@@ -85,9 +92,11 @@ const ViewCart = (props) =>{
         if(toDeleteMob !== null){deleteData()}
     },[toDeleteMob,token])
     const lapDeleteHandler = (name,vendor,index)=>{
+        isLoadingChange(true)
         toDeleteChange({name:name,vendor:vendor,index:index})
     }
     const mobDeleteHandler = (name,vendor,index)=>{
+        isLoadingChange(true)
         toDeleteMobChange({name:name,vendor:vendor,index:index})
     }
     const mobDetailsHandler = (name)=>{
@@ -98,6 +107,7 @@ const ViewCart = (props) =>{
     }
     return (
         <React.Fragment>
+            {isLoading?<Spinner/>:null}
             <Navbar/>
         <div className="viewcart-container">
             <div className="viewcart-laptop">

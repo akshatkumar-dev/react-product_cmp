@@ -3,7 +3,10 @@ import qs from 'query-string';
 import Navbar from '../widgets/navbar'
 import axios from 'axios';
 import {UserContext} from '../user_context';
+import Spinner from '../widgets/spinner'
 const ShowDetails = (props) =>{
+    let [isLoading,isLoadingChange] = useState(true);
+
     let [details,detailsChange] = useState([]);
     let context = useContext(UserContext);
     let tokenChange = context.tokenChange;
@@ -28,6 +31,7 @@ const ShowDetails = (props) =>{
                     response = await axios.get(`http://localhost:4000/api/getaldetails?name=${string.name}`)
                 }
             }
+            isLoadingChange(false)
             let x = [];
             Object.values(response.data).forEach(element=>{
                 x.push({title:element["title"],info:element["info"]})
@@ -38,6 +42,7 @@ const ShowDetails = (props) =>{
     })
     return(
         <React.Fragment>
+            {isLoading?<Spinner/>:null}
             <Navbar/>
         <div className="showdetails-container">
             <h1>{qs.parse(props.location.search).name}</h1>

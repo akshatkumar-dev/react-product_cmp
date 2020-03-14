@@ -1,9 +1,11 @@
 import React,{useState,useRef,useEffect,useContext} from 'react';
 import axios from 'axios'
-
+import Spinner from '../widgets/spinner'
 import {UserContext} from '../user_context';
 import Navbar from '../widgets/navbar'
 const ViewLaptops = (props) =>{
+    let [isLoading,isLoadingChange] = useState(false);
+
     let context = useContext(UserContext);
     let token = context.token;
     let tokenChange = context.tokenChange;
@@ -30,6 +32,7 @@ const ViewLaptops = (props) =>{
                 price: cartitem.price
             }
             let response = await axios.put("http://localhost:4000/api/addlapcart",data,{headers:{Authorization: `Bearer ${token}`}});
+            isLoadingChange(false)
             console.log(response.data);
         }
         if(cartitem !== null){addToCart()}
@@ -39,6 +42,7 @@ const ViewLaptops = (props) =>{
             amazondataChange(false)
             let response = await axios.get(`http://localhost:4000/api/getalap?min=${minPriceState}&max=${maxPriceState}`);
             let x = []
+            isLoadingChange(false)
             minPriceStateChange("")
             Object.values(response.data).forEach(element=>{
                 x.push({name:element["name"],price:element["price"]})
@@ -52,6 +56,7 @@ const ViewLaptops = (props) =>{
             flipkartdataChange(false)
             let response = await axios.get(`http://localhost:4000/api/getflap?min=${minPriceState}&max=${maxPriceState}`);
             let x = []
+            isLoadingChange(false)
             minPriceStateChange("")
             Object.values(response.data).forEach(element=>{
                 x.push({name:element["name"],price:element["price"]})
@@ -65,9 +70,11 @@ const ViewLaptops = (props) =>{
         props.history.push(`/showdetails?type=laptop&vendor=${vendor}&name=${name}`)
     }
     const addToCartHandler = (vendor,name,price)=>{
+        isLoadingChange(true)
         cartitemChange({name: name,vendor: vendor,price:price})
     }
     const getDetailsHandlerB = ()=>{
+        isLoadingChange(true)
         flipkartdataChange(true);
         amazondataChange(true);
         minPriceStateChange(minPrice.current.value);
@@ -75,6 +82,7 @@ const ViewLaptops = (props) =>{
     }
     return(
         <React.Fragment>
+            {isLoading?<Spinner/>:null}
             <Navbar/>
         <div className="viewlaptops-container">
             <div className="viewlaptops-filters">

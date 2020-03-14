@@ -2,7 +2,10 @@ import React,{useEffect,useState,useRef,useContext} from 'react';
 import Navbar from '../widgets/navbar';
 import axios from 'axios';
 import {UserContext} from '../user_context';
+import Spinner from '../widgets/spinner'
 const Register = (props) =>{
+    let [isLoading,isLoadingChange] = useState(false);
+
     let [emailState,emailStateChange] = useState({email:""})
     let [passwordState,passwordStateChange] = useState({password:""})
     let [otpState,otpStateChange] = useState({otp:0});
@@ -33,6 +36,7 @@ const Register = (props) =>{
             }
             emailState.email = "";
             let response  = await axios.post("http://localhost:4000/api/register",data);
+            isLoadingChange(false)
             if(response.data === "otp sent"){
                 otpStyleChange({value: "block"})
                 submitStyleChange({value: "none"})
@@ -50,6 +54,7 @@ const Register = (props) =>{
             }
             otpState.otp = 0;
            let response = await axios.post("http://localhost:4000/api/confirmotp",data);
+           isLoadingChange(false)
            if(response.data !== "wrong otp"){
                localStorage("auth",response.data)
                changeToken(response.data)
@@ -58,14 +63,17 @@ const Register = (props) =>{
         if(otpState.otp !== 0){confirmOtp()}
     })
     const registerHandler = ()=>{
+        isLoadingChange(true)
         emailStateChange({email:emailref.current.value})
         passwordStateChange({password:passref.current.value})
     }
     const checkOtpHandler = () =>{
+        isLoadingChange(true)
         otpStateChange({otp: parseInt(otpref.current.value)})
     }
     return(
         <React.Fragment>
+            {isLoading?<Spinner/>:null}
             <Navbar/>
         <div className="register-container">
             <p className="register-info">By registering items can be added to cart to view later and other benefits can be availed</p>

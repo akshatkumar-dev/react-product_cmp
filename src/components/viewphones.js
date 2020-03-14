@@ -2,8 +2,10 @@ import React,{useState,useRef,useEffect,useContext} from 'react';
 import axios from 'axios'
 import Navbar from '../widgets/navbar'
 import {UserContext} from '../user_context';
-
+import Spinner from '../widgets/spinner'
 const ViewPhones = (props) =>{
+    let [isLoading,isLoadingChange] = useState(false);
+
     let minPrice = useRef();
     let maxPrice = useRef();
     let context = useContext(UserContext);
@@ -30,6 +32,7 @@ const ViewPhones = (props) =>{
                 price: cartitem.price
             }
             let response = await axios.put("http://localhost:4000/api/addmobcart",data,{headers:{Authorization: `Bearer ${token}`}});
+            isLoadingChange(false)
             console.log(response.data);
         }
         if(cartitem !== null){addToCart()}
@@ -38,6 +41,7 @@ const ViewPhones = (props) =>{
         const getDetails = async ()=>{
             amazondataChange(false);
             let response = await axios.get(`http://localhost:4000/api/getaphone?min=${minPriceState}&max=${maxPriceState}`);
+            isLoadingChange(false)
             let x = []
             minPriceStateChange("")
             Object.values(response.data).forEach(element=>{
@@ -51,6 +55,7 @@ const ViewPhones = (props) =>{
         const getDetails = async ()=>{
             flipkartdataChange(false)
             let response = await axios.get(`http://localhost:4000/api/getfphone?min=${minPriceState}&max=${maxPriceState}`);
+            isLoadingChange(false)
             let x = []
             minPriceStateChange("")
             Object.values(response.data).forEach(element=>{
@@ -64,9 +69,11 @@ const ViewPhones = (props) =>{
         props.history.push(`/showdetails?type=phone&name=${name}`)
     }
     const addToCartHandler = (vendor,name,price)=>{
+        isLoadingChange(true)
         cartitemChange({name: name,vendor: vendor,price: price})
     }
     const getDetailsHandlerB = () =>{
+        isLoadingChange(true)
         flipkartdataChange(true)
         amazondataChange(true)
         minPriceStateChange(minPrice.current.value);
@@ -74,6 +81,7 @@ const ViewPhones = (props) =>{
     }
     return(
         <React.Fragment>
+            {isLoading?<Spinner/>:null}
             <Navbar/>
         <div className="viewlaptops-container">
             <div className="viewlaptops-filters">

@@ -2,8 +2,9 @@ import React, {useRef,useEffect,useState,useContext} from 'react';
 import axios from 'axios';
 import {UserContext} from '../user_context';
 import Navbar from '../widgets/navbar'
-//import './login.css';
+import Spinner from '../widgets/spinner'
 const Login = (props) =>{
+    let [isLoading,isLoadingChange] = useState(false);
     let [emailState,emailChange] = useState({email:""});
     let [passwordState,passwordChange] = useState({password:""});
     let x = useContext(UserContext);
@@ -21,13 +22,14 @@ const Login = (props) =>{
             }
             emailState.email = "";
             let response  = await axios.post("http://localhost:4000/api/login",data);
-            if(response.data !== "User does not exist" || response.data!=="Invalid credentials"){
+            isLoadingChange(false);
+            if(response.data !== "User does not exist" && response.data!=="Invalid credentials"){
                 localStorage.setItem("auth",response.data);
                 changeToken(response.data)
                 console.log("logged in")
             }
             else{
-                console.log("invalid");
+                alert("Invalid Credential")
             }
         }
         if(emailState.email.length !== 0){loginUser();}
@@ -35,11 +37,13 @@ const Login = (props) =>{
     let emailRef = useRef();
     let passwordRef = useRef();
     const loginHandler = () =>{
+        isLoadingChange(true);
         emailChange({email:emailRef.current.value });
         passwordChange({password: passwordRef.current.value})
     }
     return(
         <React.Fragment>
+            {isLoading?<Spinner/>:null}
             <Navbar/>
         <div className="login-container">
             <div className="login-form">
