@@ -48,7 +48,7 @@
 }
 
 
-/* Login Form Design */
+/* Login-Register Form Design */
 
 .login-container,.register-container{
     box-shadow: 1px 1px 20px lightgrey;
@@ -97,4 +97,87 @@
 .register-container .register-info{
     margin:16px;
     padding: 16px;
+}
+
+
+/* View Laptops/Phones Design */
+
+.viewlaptops-container{
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+.viewlaptops-filters{
+    flex: 1;
+    box-shadow: 10px 10px 20px #f2f2f2;
+
+    margin: 16px;
+}
+.viewlaptops-filters .filter-heading{
+    margin: 8px;
+}
+.viewlaptops-filters input{
+    width: 50%;
+    margin: 8px;
+    padding: 8px;
+}
+.viewlaptops-flipkart{
+    flex: 2;
+    box-shadow: 10px 10px 20px #f2f2f2;
+    margin: 16px;
+}
+.viewlaptops-amazon{
+    flex: 2;
+    box-shadow: 10px 10px 20px #f2f2f2;
+    margin: 16px;
+}
+.viewlaptops-filters .apply-filter{
+    width: 50%;
+    margin: 8px;
+    padding: 8px;
+    background-color: lightseagreen;
+    color: white;
+}
+.viewlaptops-filters .apply-filter:hover{
+    cursor: pointer;
+}
+.separator{
+    color: rgba(242, 242, 242, 0.3);
+    text-align: center;
+    margin: 8px;
+}
+.viewlaptops-result{
+    display: flex;
+    justify-content: flex-start;
+}
+.result-name,.result-price,.result-cart,.result-detail{
+    margin: 8px;
+    margin-left: 0;
+    padding-left: 0;
+    padding: 8px;
+    font-size: 1.1em;
+}
+.result-cart,.result-detail{
+    background-color: lightseagreen;
+    color: white;
+}
+.result-cart:hover,.result-detail:hover{
+    cursor: pointer;
+}
+.result-price{
+    color: #ff4d4d;
+}
+.viewlaptops-vendor-title{
+    margin-left: 8px;
+}
+
+/* Show Details Design */
+.showdetails-container{
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+.showdetails-info{
+    font-size: 1.2em;
 }

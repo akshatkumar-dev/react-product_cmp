@@ -1,5 +1,6 @@
 import React,{useState,useEffect,useContext} from 'react';
 import qs from 'query-string';
+import Navbar from '../widgets/navbar'
 import axios from 'axios';
 import {UserContext} from '../user_context';
 const ShowDetails = (props) =>{
@@ -36,18 +37,22 @@ const ShowDetails = (props) =>{
         if(details.length===0){getData();}
     })
     return(
+        <React.Fragment>
+            <Navbar/>
         <div className="showdetails-container">
-            <h1>Product Details</h1>
+            <h1>{qs.parse(props.location.search).name}</h1>
             {details.length!==0?
                 details.map((element,index)=>{
                     return(
                     <div key={index}>
-                    <p>{element.title}: {element.info}</p>
+                    <p className = "showdetails-info"><strong>{element.title}:</strong> {element.info}</p>
+                    <hr className="separator"/>
                     </div>
                     );
                 })
                 :<br></br>}
         </div>
+        </React.Fragment>
     );
 }
 

@@ -1,5 +1,6 @@
 import React,{useState,useRef,useEffect,useContext} from 'react';
 import axios from 'axios'
+import Navbar from '../widgets/navbar'
 import {UserContext} from '../user_context';
 
 const ViewPhones = (props) =>{
@@ -58,21 +59,11 @@ const ViewPhones = (props) =>{
         }
         if(minPriceState.length!==0 && flipkartdata){getDetails()}
     })
-    const getDetailsHandler = ()=>{
-        flipkartdataChange(true)
-        minPriceStateChange(minPrice.current.value);
-        maxPriceStateChange(maxPrice.current.value);
-    }
     const viewDetailsHandler = (name)=>{
         props.history.push(`/showdetails?type=phone&name=${name}`)
     }
     const addToCartHandler = (vendor,name)=>{
         cartitemChange({name: name,vendor: vendor})
-    }
-    const getDetailsHandlerA = ()=>{
-        amazondataChange(true)
-        minPriceStateChange(minPrice.current.value);
-        maxPriceStateChange(maxPrice.current.value);
     }
     const getDetailsHandlerB = () =>{
         flipkartdataChange(true)
@@ -81,41 +72,62 @@ const ViewPhones = (props) =>{
         maxPriceStateChange(maxPrice.current.value);
     }
     return(
-        <div className="viewphones-container">
-            <div className="viewphones-filters">
-                <input ref={minPrice} type="text" placeholder="Minimum price"/><br/>
-                <input ref={maxPrice} type="text" placeholder="Maximum price"/>
-                <button onClick={getDetailsHandler}>ShowFlipkart</button>
-                <button onClick={getDetailsHandlerA}>ShowAmazon</button>
-                <button onClick={getDetailsHandlerB}>ShowBoth</button>
+        <React.Fragment>
+            <Navbar/>
+        <div className="viewlaptops-container">
+            <div className="viewlaptops-filters">
+                <h2 className="filter-heading">Filters</h2>
+                <hr className="separator"/>
+                <input ref={minPrice} type="text" placeholder="Minimum price"/> in ₹
+                <input ref={maxPrice} type="text" placeholder="Maximum price"/> in ₹ <br/>
+                <hr className="separator"/>
+                <p className="apply-filter" onClick={getDetailsHandlerB}>Apply</p>
             </div>
-            <div className="viewphones-results">
-                <h1>FlipKart Data</h1>
+            <div className="viewlaptops-flipkart">
+                <h1 className="viewlaptops-vendor-title">
+                    Flipkart
+                </h1>
+                <hr className="separator"/>
                 {resultsState.length!==0?
                 resultsState.map((element,index)=>{
                     return(
                     <div key={index}>
-                    <p>{element.name} {element.price}</p>
-                    <button onClick={()=>viewDetailsHandler(element.name)}>View Details</button>
-                    <button onClick={()=>addToCartHandler("flipkart",element.name)}>Cart</button>
+                        <div className="viewlaptops-result">
+                <p className="result-name">{element.name.slice(0,22)}...</p>
+                <p className="result-price">{element.price}</p>
+                <p className="result-cart" onClick={()=>addToCartHandler("flipkart",element.name)}>Add to cart</p>
+                <p className="result-detail" onClick={()=>viewDetailsHandler(element.name)}>More details...</p>
+                </div>
+                <hr className="separator"/>
                     </div>
                     );
                 })
                 :<br></br>}
-                <h1>Amazon Data</h1>
+                
+                </div>
+                <div className="viewlaptops-amazon">
+
+                <h1 className="viewlaptops-vendor-title">Amazon</h1>
+                <hr className="separator"/>
                 {resultsAState.length!==0?
                 resultsAState.map((element,index)=>{
                     return(
-                    <div key={index}>
-                    <p>{element.name} {element.price}</p>
-                    <button onClick={()=>viewDetailsHandler(element.name)}>View Details</button>
-                    <button onClick={()=>addToCartHandler("amazon",element.name)}>Cart</button>
+                        <div key={index}>
+                        <div className="viewlaptops-result">
+                <p className="result-name">{element.name.slice(0,22)}...</p>
+                <p className="result-price">₹ {element.price}</p>
+                <p className="result-cart" onClick={()=>addToCartHandler("amazon",element.name)}>Add to cart</p>
+                <p className="result-detail" onClick={()=>viewDetailsHandler(element.name)}>More details...</p>
+                </div>
+                <hr className="separator"/>
                     </div>
                     );
                 })
                 :<br></br>}
-            </div>
+                
+                </div>
         </div>
+        </React.Fragment>
     );
 }
 
