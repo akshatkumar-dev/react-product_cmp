@@ -1,8 +1,8 @@
 import React,{useState,useEffect,useContext} from 'react';
 import {UserContext} from '../user_context';
 import axios from 'axios'
-
-const ViewCart = () =>{
+import Navbar from '../widgets/navbar';
+const ViewCart = (props) =>{
     let [lapcartdata,lapcartdataChange] = useState([]);
     let [phonecartdata,phonecartdataChange] = useState([]);
     let [lapcart,lapcartChange] = useState(true);
@@ -29,7 +29,7 @@ const ViewCart = () =>{
 
             
             Object.values(response.data).forEach(element=>{
-                x.push({name:element["name"],vendor:element["vendor"]})
+                x.push({name:element["name"],vendor:element["vendor"],price: element["price"]})
             })
             lapcartdataChange([...x]);
         }else{
@@ -45,7 +45,7 @@ const ViewCart = () =>{
             let x = []
             if(response.data !== "No"){
                 Object.values(response.data).forEach(element=>{
-                    x.push({name:element["name"],vendor:element["vendor"]})
+                    x.push({name:element["name"],vendor:element["vendor"],price: element["price"]})
                 })
                 phonecartdataChange([...x]);
             }
@@ -90,29 +90,58 @@ const ViewCart = () =>{
     const mobDeleteHandler = (name,vendor,index)=>{
         toDeleteMobChange({name:name,vendor:vendor,index:index})
     }
+    const mobDetailsHandler = (name)=>{
+        props.history.push(`/showdetails?type=phone&name=${name}`)
+    }
+    const lapDetailsHandler = (name,vendor)=>{
+        props.history.push(`/showdetails?type=laptop&vendor=${vendor}&name=${name}`)
+    }
     return (
+        <React.Fragment>
+            <Navbar/>
         <div className="viewcart-container">
-            <h1>Laptop cart</h1>
-            {lapcartdata.length!==0?
+            <div className="viewcart-laptop">
+                <h1>Laptop cart</h1>
+                <hr className="separator"/>
+
+                {lapcartdata.length!==0?
                 lapcartdata.map((element,index)=>{
                     return(
-                    <div key={index}>
-                    <p>{element.name} {element.vendor} <button onClick={()=>{lapDeleteHandler(element.name,element.vendor,index)}}>Delete</button></p>
+                    <div key={index} className="viewcart-item">
+                        <p className="viewcart-name"><strong>{element.name}</strong></p>
+                <p className="viewcart-price">{element.price}</p>
+                <p className="viewcart-vendor">{element.vendor.charAt(0).toUpperCase()+element.vendor.slice(1)}</p>
+                <p onClick={()=>{lapDeleteHandler(element.name,element.vendor,index)}} className="viewcart-delete">Remove</p>
+                <p onClick={()=>{lapDetailsHandler(element.name,element.vendor)}} className="viewcart-detail">View Detail</p>
+                <hr className="separator"/>
                     </div>
                     );
                 })
                 :<br></br>}
+                
+            </div>
+            <div className="viewcart-phone">
                 <h1>Phone cart</h1>
+                <hr className="separator"/>
                 {phonecartdata.length!==0?
                 phonecartdata.map((element,index)=>{
                     return(
-                    <div key={index}>
-                    <p>{element.name} {element.vendor} <button onClick={()=>{mobDeleteHandler(element.name,element.vendor,index)}}>Delete</button></p>
+                        <div key={index} className="viewcart-item">
+                        <p className="viewcart-name"><strong>{element.name}</strong></p>
+                <p className="viewcart-price">{element.price}</p>
+                <p className="viewcart-vendor">{element.vendor.charAt(0).toUpperCase()+element.vendor.slice(1)}</p>
+                <p onClick={()=>{mobDeleteHandler(element.name,element.vendor,index)}} className="viewcart-delete">Remove</p>
+                <p onClick={()=>{mobDetailsHandler(element.name)}} className="viewcart-detail">View Detail</p>
+
+                <hr className="separator"/>
                     </div>
                     );
                 })
                 :<br></br>}
+            </div>
+            
         </div>
+        </React.Fragment>
     );
 }
 

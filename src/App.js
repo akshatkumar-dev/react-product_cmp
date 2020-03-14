@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {BrowserRouter,Route,Switch} from 'react-router-dom';
+import {BrowserRouter,Route,Switch,Redirect} from 'react-router-dom';
 import Login from './components/login'
 import './app.css'
 import Register from './components/register'
@@ -14,12 +14,19 @@ const App = () => {
   const tokenchangeHandler = (token)=>{
     userTokenChange(token);
   }
+  const tokenLogout = ()=>{
+    userTokenChange(null);
+    localStorage.removeItem("auth");
+  }
   return (
     <div className="app-container">
-      <UserContext.Provider value={{token: userToken,tokenChange: tokenchangeHandler}}>
+      <UserContext.Provider value={{token: userToken,tokenChange: tokenchangeHandler,logout: tokenLogout}}>
     <BrowserRouter>
       <div className="App">
         <Switch>
+          {userToken === null && <Redirect from="/viewcart" to="/" exact/> }
+          {userToken !== null && <Redirect from="/login" to="/" exact/> }
+          {userToken !== null && <Redirect from="/register" to="/" exact/> }
           <Route path="/" exact component={Home}/>
           <Route path="/login" exact component={Login}/>
           <Route path="/register" exact component={Register}/>

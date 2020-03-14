@@ -26,7 +26,8 @@ const ViewLaptops = (props) =>{
         const addToCart = async ()=>{
             let data = {
                 name: cartitem.name,
-                vendor: cartitem.vendor
+                vendor: cartitem.vendor,
+                price: cartitem.price
             }
             let response = await axios.put("http://localhost:4000/api/addlapcart",data,{headers:{Authorization: `Bearer ${token}`}});
             console.log(response.data);
@@ -63,8 +64,8 @@ const ViewLaptops = (props) =>{
     const viewDetailsHandler = (vendor,name)=>{
         props.history.push(`/showdetails?type=laptop&vendor=${vendor}&name=${name}`)
     }
-    const addToCartHandler = (vendor,name)=>{
-        cartitemChange({name: name,vendor: vendor})
+    const addToCartHandler = (vendor,name,price)=>{
+        cartitemChange({name: name,vendor: vendor,price:price})
     }
     const getDetailsHandlerB = ()=>{
         flipkartdataChange(true);
@@ -94,9 +95,9 @@ const ViewLaptops = (props) =>{
                     return(
                     <div key={index}>
                         <div className="viewlaptops-result">
-                <p className="result-name">{element.name.slice(0,22)}...</p>
+                <p className="result-name">{element.name}</p>
                 <p className="result-price">{element.price}</p>
-                <p className="result-cart" onClick={()=>addToCartHandler("flipkart",element.name)}>Add to cart</p>
+                <p className="result-cart" onClick={()=>addToCartHandler("flipkart",element.name,element.price)}>Add to cart</p>
                 <p className="result-detail" onClick={()=>viewDetailsHandler("flipkart",element.name)}>More details...</p>
                 </div>
                 <hr className="separator"/>
@@ -115,9 +116,9 @@ const ViewLaptops = (props) =>{
                     return(
                         <div key={index}>
                         <div className="viewlaptops-result">
-                <p className="result-name">{element.name.slice(0,22)}...</p>
+                <p className="result-name">{element.name}</p>
                 <p className="result-price">₹ {element.price}</p>
-                <p className="result-cart" onClick={()=>addToCartHandler("amazon",element.name)}>Add to cart</p>
+                <p className="result-cart" onClick={()=>addToCartHandler("amazon",element.name,element.price)}>Add to cart</p>
                 <p className="result-detail" onClick={()=>viewDetailsHandler("amazon",element.name)}>More details...</p>
                 </div>
                 <hr className="separator"/>

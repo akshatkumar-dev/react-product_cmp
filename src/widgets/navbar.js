@@ -1,9 +1,10 @@
 import React,{useContext} from 'react';
-import {NavLink} from 'react-router-dom'
+import {NavLink,Link} from 'react-router-dom'
 import {UserContext} from '../user_context';
 const Navbar = () =>{
     let context = useContext(UserContext);
     let token = context.token;
+    let tokenLogout = context.logout
     return(
         <div className="navbar-container">
             <div className="navbar">
@@ -46,7 +47,9 @@ const Navbar = () =>{
                     </NavLink>
                     </div>
                     <div className="navbar-option">
+                    <Link onClick={tokenLogout} to="/" className="navbar-link">
                         Logout
+                    </Link>
                     </div>
                     </div>}
                 </div>
