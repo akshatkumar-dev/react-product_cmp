@@ -2,7 +2,7 @@ import React,{useEffect,useState,useRef,useContext} from 'react';
 import Navbar from '../widgets/navbar';
 import axios from 'axios';
 import {UserContext} from '../user_context';
-const Register = () =>{
+const Register = (props) =>{
     let [emailState,emailStateChange] = useState({email:""})
     let [passwordState,passwordStateChange] = useState({password:""})
     let [otpState,otpStateChange] = useState({otp:0});
@@ -65,18 +65,23 @@ const Register = () =>{
         otpStateChange({otp: parseInt(otpref.current.value)})
     }
     return(
-        <div className="register-container">
+        <React.Fragment>
             <Navbar/>
+        <div className="register-container">
+            <p className="register-info">By registering items can be added to cart to view later and other benefits can be availed</p>
             <div className="register-form">
                 <input ref={emailref} type="email" placeholder="Email" required/> <br/>
                 <input ref={passref} type="password" placeholder="Password" required minLength="8"/> <br/>
-                <button style={submitStyle} onClick={registerHandler}>Register</button>
+                <p className="register" style={submitStyle} onClick={registerHandler}>Register</p>
+                <p className="registered">Already registered? <span onClick={()=>{props.history.push("/register")}}>Click here</span></p>
+
     <p style={otpStyle}>An otp has been sent to {emailState.email}</p>
                 <input ref={otpref} style={otpStyle} type="text" placeholder="OTP"/> <br/>
-                <button style={otpStyle} onClick={checkOtpHandler}>Confirm</button>
+                <p className="register" style={otpStyle} onClick={checkOtpHandler}>Confirm</p>
 
             </div>
         </div>
+        </React.Fragment>
     );
 }
 

@@ -1,7 +1,8 @@
 import React, {useRef,useEffect,useState,useContext} from 'react';
 import axios from 'axios';
-import Navbar from '../widgets/navbar';
 import {UserContext} from '../user_context';
+import Navbar from '../widgets/navbar'
+//import './login.css';
 const Login = (props) =>{
     let [emailState,emailChange] = useState({email:""});
     let [passwordState,passwordChange] = useState({password:""});
@@ -38,17 +39,20 @@ const Login = (props) =>{
         passwordChange({password: passwordRef.current.value})
     }
     return(
-
+        <React.Fragment>
+            <Navbar/>
         <div className="login-container">
-            <Navbar />
-            By signing in you can add items to cart to view them later and also for easy comparison
             <div className="login-form">
+                <div className="inputBackground">
+
                 <input ref={emailRef} type="text" placeholder="Email" required/> <br/>
+                </div>
                 <input ref={passwordRef} type="password" placeholder="Password" required minLength="8"/> <br/>
-                <button onClick={loginHandler}>Login</button>
-                <button onClick={()=>{props.history.push("/viewcart")}}>View Cart</button>
+                <p className="login"onClick={loginHandler}>Login</p>
+                <p className="not-registered">Not registered? <span onClick={()=>{props.history.push("/register")}}>Click here</span></p>
             </div>
         </div>
+        </React.Fragment>
     );
 }
 

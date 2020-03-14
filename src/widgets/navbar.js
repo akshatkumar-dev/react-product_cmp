@@ -1,6 +1,5 @@
 import React,{useContext} from 'react';
 import {NavLink} from 'react-router-dom'
-import './navbar.css'
 import {UserContext} from '../user_context';
 const Navbar = () =>{
     let context = useContext(UserContext);
@@ -8,49 +7,51 @@ const Navbar = () =>{
     return(
         <div className="navbar-container">
             <div className="navbar">
-                <div className="navbar-title">
-                    Product Cmp
-                </div>
-                <div className="navbar-options">
-                    <div className="navbar-option">
-                        <NavLink to="/viewphones">
-                        Phones
+                <div className="navbar-left">
+                    <div className="navbar-title">
+                        <NavLink to="/" className="navbar-link navbar-link-title">
+                        COMPARATOR
                         </NavLink>
                     </div>
                     <div className="navbar-option">
-                        <NavLink to="/viewlaptops">
+                    <NavLink to="/viewlaptops" className="navbar-link">
                         Laptops
                         </NavLink>
                     </div>
-                    {token===null?
-                    <div className="navbar-notlogged">
-                        <div className="navbar-option">
-                        <NavLink to="/login">
+                    <div className="navbar-option">
+                    <NavLink to="/viewphones" className="navbar-link">
+                        Phones
+                        </NavLink>
+                    </div>
+                </div>
+                {token===null?
+                <div className="navbar-right">
+
+                    <div className="navbar-option" >
+                    <NavLink to="/login" className="navbar-link">
                         Login
                         </NavLink>
                     </div>
                     <div className="navbar-option">
-                    <NavLink to="/register">
+                    <NavLink to="/register" className="navbar-link">
                         Register
-                        </NavLink>                    
+                        </NavLink>
                     </div>
-                    </div>:<div className="navbar-logged">
+                    </div>
+                :
+                <div className="navbar-right">
                     <div className="navbar-option">
-                        <NavLink to="/viewcart">
+                    <NavLink to="/viewcart" className="navbar-link">
                         View Cart
-                        </NavLink>
+                    </NavLink>
                     </div>
-                        <div className="navbar-option">
-                        <NavLink to="/">
+                    <div className="navbar-option">
                         Logout
-                        </NavLink>
                     </div>
-                    </div>
-                    }
-                    
+                    </div>}
                 </div>
-            </div>
         </div>
+        
     );
 }
 export default Navbar;

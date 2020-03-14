@@ -1,0 +1,100 @@
+/* Navigation Bar desgin */
+.navbar-container{
+    z-index: 200;
+}
+.navbar-link{
+    text-decoration: none;
+    color: black;
+}
+.navbar-link{
+    margin:16px;
+    padding: 16px;
+}
+.navbar-option .navbar-link:hover{
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+.navbar-option .active{
+    background-color: lightseagreen;
+    color: white;
+}
+.navbar-option .active:hover{
+    background-color: lightseagreen;
+    color: white;
+}
+.navbar-link-title{
+    color: lightseagreen;
+}
+.navbar{
+    box-shadow: 0.5px 0.5px 10px lightgray;
+    display: flex;
+    height: 64px;
+    justify-content: space-between;
+    align-items: center;
+}
+.navbar-left{
+    display: flex;
+}
+.navbar-right{
+    display: flex;
+}
+.navbar-title, .navbar-option{
+    
+    font-weight: bold;
+}
+.navbar-title{
+    
+    color: lightseagreen;
+}
+
+
+/* Login Form Design */
+
+.login-container,.register-container{
+    box-shadow: 1px 1px 20px lightgrey;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30%;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 10%;
+}
+
+
+.login-container input, .register-container input{
+    border-style: solid;
+    border: none;
+    background-color: #f2f2f2;
+    width: 60%;
+    padding: 1em;
+    margin: 1em;
+    font-size: 1em;
+}
+
+
+.login-container .login,.register-container .register{
+    padding: 1em;
+    display: block;
+    background-color: lightseagreen;
+    color: white;
+    margin-left: 16%;
+    width: 61%;
+}
+.login-container .login:hover, .register-container .register:hover{
+    cursor: pointer;
+}
+.login-container span:hover,.register-container span:hover{
+    cursor: pointer;
+}
+.login-container span, .register-container span{
+    color: lightseagreen;
+}
+.login-container .not-registered, .register-container .registerd{
+    margin-bottom: 2em;
+    margin-top: 0;
+}
+.register-container .register-info{
+    margin:16px;
+    padding: 16px;
+}
