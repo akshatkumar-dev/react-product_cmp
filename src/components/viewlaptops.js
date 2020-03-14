@@ -33,7 +33,9 @@ const ViewLaptops = (props) =>{
             }
             let response = await axios.put("http://localhost:4000/api/addlapcart",data,{headers:{Authorization: `Bearer ${token}`}});
             isLoadingChange(false)
-            console.log(response.data);
+            if(response.data !== "updated"){
+                alert("Error try again")
+            }
         }
         if(cartitem !== null){addToCart()}
     },[cartitem,token])

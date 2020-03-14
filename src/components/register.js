@@ -41,6 +41,9 @@ const Register = (props) =>{
                 otpStyleChange({value: "block"})
                 submitStyleChange({value: "none"})
             }
+            else{
+                alert("Server error try later")
+            }
         }
         if(emailState.email.length!==0){registerUser();}
     })
@@ -58,6 +61,9 @@ const Register = (props) =>{
            if(response.data !== "wrong otp"){
                localStorage("auth",response.data)
                changeToken(response.data)
+           }
+           else{
+               alert("Wrong otp entered")
            }
         }
         if(otpState.otp !== 0){confirmOtp()}
