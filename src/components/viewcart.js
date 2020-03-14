@@ -26,7 +26,7 @@ const ViewCart = (props) =>{
     useEffect(()=>{
         const fetchData = async ()=>{
             lapcartChange(false);
-            let response = await axios.get("http://localhost:4000/api/getlapcart",{headers:{Authorization: `Bearer ${token}`}})
+            let response = await axios.get("https://backend-node-productcmp.herokuapp.com/api/getlapcart",{headers:{Authorization: `Bearer ${token}`}})
             isLoadingChange(false)
             let x = []
             if(response.data !== "No"){
@@ -45,7 +45,7 @@ const ViewCart = (props) =>{
     useEffect(()=>{
         const fetchData = async ()=>{
             phonecartChange(false);
-            let response = await axios.get("http://localhost:4000/api/getmobcart",{headers:{Authorization: `Bearer ${token}`}})
+            let response = await axios.get("https://backend-node-productcmp.herokuapp.com/api/getmobcart",{headers:{Authorization: `Bearer ${token}`}})
             isLoadingChange(false)
             let x = []
             if(response.data !== "No"){
@@ -61,7 +61,7 @@ const ViewCart = (props) =>{
     useEffect(()=>{
         const deleteData = async ()=>{
             
-            let response = await axios.delete(`http://localhost:4000/api/deletelapcart?name=${toDelete.name}&vendor=${toDelete.vendor}`,{headers:{Authorization: `Bearer ${token}`}})
+            let response = await axios.delete(`https://backend-node-productcmp.herokuapp.com/api/deletelapcart?name=${toDelete.name}&vendor=${toDelete.vendor}`,{headers:{Authorization: `Bearer ${token}`}})
             isLoadingChange(false)
             console.log(response.data)
             if(response.data === "Value removed"){
@@ -77,7 +77,7 @@ const ViewCart = (props) =>{
     useEffect(()=>{
         const deleteData = async ()=>{
             
-            let response = await axios.delete(`http://localhost:4000/api/deletemobcart?name=${toDeleteMob.name}&vendor=${toDeleteMob.vendor}`,{headers:{Authorization: `Bearer ${token}`}})
+            let response = await axios.delete(`https://backend-node-productcmp.herokuapp.com/api/deletemobcart?name=${toDeleteMob.name}&vendor=${toDeleteMob.vendor}`,{headers:{Authorization: `Bearer ${token}`}})
             isLoadingChange(false);
             console.log(response.data)
             if(response.data === "Value removed"){

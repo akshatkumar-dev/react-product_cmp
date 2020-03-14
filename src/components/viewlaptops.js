@@ -31,7 +31,7 @@ const ViewLaptops = (props) =>{
                 vendor: cartitem.vendor,
                 price: cartitem.price
             }
-            let response = await axios.put("http://localhost:4000/api/addlapcart",data,{headers:{Authorization: `Bearer ${token}`}});
+            let response = await axios.put("https://backend-node-productcmp.herokuapp.com/api/addlapcart",data,{headers:{Authorization: `Bearer ${token}`}});
             isLoadingChange(false)
             if(response.data !== "updated"){
                 alert("Error try again")
@@ -42,7 +42,7 @@ const ViewLaptops = (props) =>{
     useEffect(()=>{
         const getDetails = async ()=>{
             amazondataChange(false)
-            let response = await axios.get(`http://localhost:4000/api/getalap?min=${minPriceState}&max=${maxPriceState}`);
+            let response = await axios.get(`https://backend-node-productcmp.herokuapp.com/api/getalap?min=${minPriceState}&max=${maxPriceState}`);
             let x = []
             isLoadingChange(false)
             minPriceStateChange("")
@@ -56,7 +56,7 @@ const ViewLaptops = (props) =>{
     useEffect(()=>{
         const getDetails = async ()=>{
             flipkartdataChange(false)
-            let response = await axios.get(`http://localhost:4000/api/getflap?min=${minPriceState}&max=${maxPriceState}`);
+            let response = await axios.get(`https://backend-node-productcmp.herokuapp.com/api/getflap?min=${minPriceState}&max=${maxPriceState}`);
             let x = []
             isLoadingChange(false)
             minPriceStateChange("")

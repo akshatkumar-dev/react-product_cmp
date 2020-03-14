@@ -31,7 +31,7 @@ const ViewPhones = (props) =>{
                 vendor: cartitem.vendor,
                 price: cartitem.price
             }
-            let response = await axios.put("http://localhost:4000/api/addmobcart",data,{headers:{Authorization: `Bearer ${token}`}});
+            let response = await axios.put("https://backend-node-productcmp.herokuapp.com/api/addmobcart",data,{headers:{Authorization: `Bearer ${token}`}});
             isLoadingChange(false)
             if(response.data !== "updated"){
                 alert("Error try again")
@@ -42,7 +42,7 @@ const ViewPhones = (props) =>{
     useEffect(()=>{
         const getDetails = async ()=>{
             amazondataChange(false);
-            let response = await axios.get(`http://localhost:4000/api/getaphone?min=${minPriceState}&max=${maxPriceState}`);
+            let response = await axios.get(`https://backend-node-productcmp.herokuapp.com/api/getaphone?min=${minPriceState}&max=${maxPriceState}`);
             isLoadingChange(false)
             let x = []
             minPriceStateChange("")
@@ -56,7 +56,7 @@ const ViewPhones = (props) =>{
     useEffect(()=>{
         const getDetails = async ()=>{
             flipkartdataChange(false)
-            let response = await axios.get(`http://localhost:4000/api/getfphone?min=${minPriceState}&max=${maxPriceState}`);
+            let response = await axios.get(`https://backend-node-productcmp.herokuapp.com/api/getfphone?min=${minPriceState}&max=${maxPriceState}`);
             isLoadingChange(false)
             let x = []
             minPriceStateChange("")

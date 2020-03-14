@@ -21,7 +21,7 @@ const Login = (props) =>{
                 "password": passwordState.password
             }
             emailState.email = "";
-            let response  = await axios.post("http://localhost:4000/api/login",data);
+            let response  = await axios.post("https://backend-node-productcmp.herokuapp.com/api/login",data);
             isLoadingChange(false);
             if(response.data !== "User does not exist" && response.data!=="Invalid credentials"){
                 localStorage.setItem("auth",response.data);

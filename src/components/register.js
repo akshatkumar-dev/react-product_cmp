@@ -35,7 +35,7 @@ const Register = (props) =>{
                 "password": passwordState.password
             }
             emailState.email = "";
-            let response  = await axios.post("http://localhost:4000/api/register",data);
+            let response  = await axios.post("https://backend-node-productcmp.herokuapp.com/api/register",data);
             isLoadingChange(false)
             if(response.data === "otp sent"){
                 otpStyleChange({value: "block"})
@@ -56,7 +56,7 @@ const Register = (props) =>{
                 "otp": otpState.otp
             }
             otpState.otp = 0;
-           let response = await axios.post("http://localhost:4000/api/confirmotp",data);
+           let response = await axios.post("https://backend-node-productcmp.herokuapp.com/api/confirmotp",data);
            isLoadingChange(false)
            if(response.data !== "wrong otp"){
                localStorage("auth",response.data)

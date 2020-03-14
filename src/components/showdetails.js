@@ -21,14 +21,14 @@ const ShowDetails = (props) =>{
             let string = qs.parse(props.location.search);
             let response;
             if(string.type === "phone"){
-                response = await axios.get(`http://localhost:4000/api/getpdetails?name=${string.name}`)
+                response = await axios.get(`https://backend-node-productcmp.herokuapp.com/api/getpdetails?name=${string.name}`)
             }
             if(string.type === "laptop"){
                 if(string.vendor === "flipkart"){
-                    response = await axios.get(`http://localhost:4000/api/getfldetails?name=${string.name}`)
+                    response = await axios.get(`https://backend-node-productcmp.herokuapp.com/api/getfldetails?name=${string.name}`)
                 }
                 if(string.vendor === "amazon"){
-                    response = await axios.get(`http://localhost:4000/api/getaldetails?name=${string.name}`)
+                    response = await axios.get(`https://backend-node-productcmp.herokuapp.com/api/getaldetails?name=${string.name}`)
                 }
             }
             isLoadingChange(false)
